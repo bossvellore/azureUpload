@@ -4,8 +4,12 @@
              xmlns:local="clr-namespace:AzureUpload"
              x:Class="AzureUpload.MainPage">
 
-	<Label Text="Welcome to Xamarin Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+
+    <StackLayout>
+        <Button x:Name="takePicture" Text="Take Picture" Clicked="takePicture_Clicked" />
+        <Image x:Name="image" />
+        <Label x:Name="status" />
+        <Button x:Name="uploadPicture" Text="Upload Picture" Clicked="uploadPicture_Clicked" />
+    </StackLayout>
 
 </ContentPage>
