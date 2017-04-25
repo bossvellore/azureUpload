@@ -10,6 +10,10 @@
         <Image x:Name="image" />
         <Label x:Name="status" />
         <Button x:Name="uploadPicture" Text="Upload Picture" Clicked="uploadPicture_Clicked" />
+        <Label Text="If you don't have internet connection to upload keep taking picture. 
+               Use sync on previous page to upload images when you have internet connection." />
+        
+
     </StackLayout>
 
 </ContentPage>

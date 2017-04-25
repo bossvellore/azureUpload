@@ -12,8 +12,7 @@ namespace AzureUpload
 		public App ()
 		{
 			InitializeComponent();
-
-			MainPage = new AzureUpload.MainPage();
+			MainPage = new NavigationPage(new AzureUpload.ImageListPage());
 		}
 
 		protected override void OnStart ()

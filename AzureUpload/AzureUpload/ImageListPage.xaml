@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AzureUpload.ImageListPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Sync Files" Clicked="OnSync">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="+" Clicked="OnItemAdded">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource" Android="plus.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        
+    </ContentPage.ToolbarItems>
+    <ListView x:Name="imageListView">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Text="Edit" />
+                        <MenuItem Text="Delete" IsDestructive="True" />
+                    </ViewCell.ContextActions>
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Img Name: " FontAttributes="Bold" />
+                            <Label Text="{Binding Name}" />
+                            <Label Text="Is Uploaded: " FontAttributes="Bold" />
+                            <Label Text="{Binding IsUploaded}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" MinimumHeightRequest="20">
+                            <Label Text="Img Path: " FontAttributes="Bold" />
+                            <Label Text="{Binding FilePath}" />
+                        </StackLayout>
+                    </StackLayout>
+
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

@@ -59,18 +59,26 @@ namespace AzureUpload
 		{
 			var container = GetContainer(containerType);
 			//await container.CreateIfNotExistsAsync();
-
 			//var name = Guid.NewGuid().ToString();
 			var fileBlob = container.GetBlockBlobReference(name);
             //fileBlob.UploadFromFileAsync()
             //StorageFile.GetFileFromPathAsync("");
-            //fileBlob.UploadFromStreamAsync()
 			await fileBlob.UploadFromStreamAsync(stream);
-
 			return name;
 		}
+        public static async Task<string> UploadFileAsync(ContainerType containerType, byte[] bytes, string name)
+        {
+            var container = GetContainer(containerType);
+            //await container.CreateIfNotExistsAsync();
+            //var name = Guid.NewGuid().ToString();
+            var fileBlob = container.GetBlockBlobReference(name);
+            //fileBlob.UploadFromFileAsync()
+            //StorageFile.GetFileFromPathAsync("");
+            await fileBlob.UploadFromByteArrayAsync(bytes, 0, bytes.Length);
+            return name;
+        }
 
-		public static async Task<bool> DeleteFileAsync(ContainerType containerType, string name)
+        public static async Task<bool> DeleteFileAsync(ContainerType containerType, string name)
 		{
 			var container = GetContainer(containerType);
 			var blob = container.GetBlobReference(name);

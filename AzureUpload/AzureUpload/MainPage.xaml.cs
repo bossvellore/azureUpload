@@ -13,6 +13,7 @@ namespace AzureUpload
 	public partial class MainPage : ContentPage
 	{
         MediaFile uploadFile;
+        ImageModel imageModel;
         string fileName;
 		public MainPage()
 		{
@@ -34,34 +35,30 @@ namespace AzureUpload
                 Directory = "Sample",
                 Name = fileName
             });
-
             if (uploadFile == null)
                 return;
-            string filePath = uploadFile.Path;
-            //file.Dispose();
-            //await DisplayAlert("File Location", file.Path, "OK");
-            image.Source = ImageSource.FromFile(filePath);
-            /*image.Source = ImageSource.FromStream(() =>
-            {
-                var stream = file.GetStream();
-                file.Dispose();
-                return stream;
-            });
-            */
+            image.Source = ImageSource.FromFile(uploadFile.Path);
+            imageModel = new ImageModel();
+            imageModel.Name = fileName;
+            imageModel.FilePath = Constants.LocalFilePath+"/"+fileName;
+            await ImageDataManager.Manager.SaveImageAsync(imageModel);
         }
 
-        private void uploadPicture_Clicked(object sender, EventArgs e)
+        private async void uploadPicture_Clicked(object sender, EventArgs e)
         {
+            // Check internet connection is available and then allow
             status.Text = "";
+            
             if (uploadFile == null)
             {
-                DisplayAlert("No Picture.", "Please take picture first.", "OK");
+                await DisplayAlert("No Picture.", "Please take picture first.", "OK");
                 return;
             }
             status.Text = "Upload Started";
-            AzureStorage.UploadFileAsync(ContainerType.Images, uploadFile.GetStream(), fileName).ContinueWith(r => {
-                status.Text = "Upload Completd.";
-            });
+            await AzureStorage.UploadFileAsync(ContainerType.Images, uploadFile.GetStream(), fileName);
+            imageModel.IsUploaded = true;
+            await ImageDataManager.Manager.SaveImageAsync(imageModel);
+            
         }
     }
 }
